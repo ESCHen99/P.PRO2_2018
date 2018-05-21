@@ -27,6 +27,7 @@ void inventory::inventario() const
 {
 	map<string , int>::const_iterator it=products.begin();
 	while(it!=products.end()){
+		cout<<"  ";
 		cout<<it -> first<<' '<<it -> second<<endl;
 		++it;
 	}

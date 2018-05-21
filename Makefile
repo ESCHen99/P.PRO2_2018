@@ -1,7 +1,7 @@
 OPCIONS = -D_JUDGE_ -D_GLIBCXX_DEBUG -O2 -Wall -Wextra -Werror -Wno-sign-compare -std=c++11
 
-program.x: program.o warehouse.o Sala.o inventory.o
-	g++ -o program.x *.o 
+program.exe: program.o warehouse.o Sala.o inventory.o
+	g++ -o program.exe *.o 
 
 warehouse.o: warehouse.cc Warehouse.hh Sala.hh Inventory.hh
 	g++ -c warehouse.cc $(OPCIONS) 
@@ -17,4 +17,4 @@ program.o: program.cc Warehouse.hh Inventory.hh
 
 clean:
 	rm *.o
-	rm *.x
+	rm *.exe

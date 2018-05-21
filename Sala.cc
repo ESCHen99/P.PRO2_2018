@@ -1,7 +1,8 @@
 #include "Sala.hh"
 using namespace std;
 
-int sala::poner_items(string& product, int quantity){
+
+int sala::poner_items(string& product, int quantity){ //modificar
 	int afegits=0;
 	int cont=quantity;
 	for(int i=0; i<files*columnes and cont>0; ++i){
@@ -11,17 +12,41 @@ int sala::poner_items(string& product, int quantity){
 			 --cont;
 		 }
 	}
+
+	map<string, int>* m=inv.acces_map();
+	if(afegits!=0){
+	(*m)[product]+=afegits;
+	n_prods+=afegits;
+	}
+	return afegits;
+}
+
+/*
+int sala::poner_items(string& product, int quantity){
+	int afegits=0;
+	int cont=quantity;
+	
+	for(int i=files-1; i>=0 and cont>0; --i){
+		for(int j=0; j<columnes; ++j){
+			if(stan[i*columnes+j]=="NULL"){
+			 stan[i*columnes+j]=product;
+			 ++afegits;
+			 --cont;
+		 }
+		}
+	}
 	map<string, int>* m=inv.acces_map();
 	(*m)[product]+=afegits;
 	n_prods+=afegits;
 	if(n_prods==0) (*m).erase(product);
 	return afegits;
 }
+*/
 
-int sala::quitar_items(string& product, int quantity){
+int sala::quitar_items(string& product, int quantity){ //modificar
 	int sustrets=0;
 	int cont=quantity;
-	for(int i=int(stan.size())-1; i>=0 and cont>0; --i){
+	for(int i=0; i<files*columnes and cont>0; ++i){ //segur que és <files*columnes?
 			if(stan[i]==product){
 				stan[i]="NULL";
 				++sustrets;
@@ -32,11 +57,32 @@ int sala::quitar_items(string& product, int quantity){
 	if((*m)[product]==sustrets) m->erase(product);
 	else (*m)[product]-=sustrets; 
 	n_prods-=sustrets;
-	if(n_prods==0) (*m).erase(product);
 	return sustrets;
 }
 
-void sala::compactar(){
+/*
+int sala::quitar_items(string& product, int quantity){ //modificar
+	int sustrets=0;
+	int cont=quantity;
+		for(int i=files-1; i>=0 and cont>0; --i){
+		for(int j=0; j<columnes; ++j){
+			if(stan[i*columnes+j]==product){
+				stan[i*columnes+j]="NULL";
+				++sustrets;
+				--cont;
+			}
+		}
+	}
+	map<string, int>* m=inv.acces_map();
+	if((*m)[product]==sustrets) m->erase(product);
+	else (*m)[product]-=sustrets; 
+	n_prods-=sustrets;
+	if(n_prods==0) (*m).erase(product);
+	return sustrets;
+}
+*/
+
+void sala::compactar(){ //Modificar
 	int i_1=0, i_2=0;
 	while(i_1<int(stan.size()) and int(i_2<stan.size())){
 		//cout<<i_1<<' '<<i_2<<' '<<stan[i_1]<<' '<<stan[i_2]<<endl;
@@ -46,15 +92,20 @@ void sala::compactar(){
 	}
 }
 
-void sala::reorganizar(){
+void sala::reorganizar(){ //Modificar
 	map<string, int>* m=inv.acces_map();
 	map<string , int>::iterator it= m -> begin();
-	this->compactar();
+	//this->compactar();
+	vector<string> s(files*columnes);
 	int i=0;
 	while(it!= m -> end()){
-		for(;i< it -> second; ++i) stan[i]=it -> first;
+		for(int j=0; j<it->second; ++j){
+			s[i]=it -> first;
+			++i;
+		}
 		++it;
 	}
+	stan=s;
 }
 
 void sala::redimensionar(int files, int columnes){
@@ -68,14 +119,15 @@ void sala::redimensionar(int files, int columnes){
 
 void sala::escribir() const
 {
-	for(int i=0; i<files; ++i){
+	for(int i=files-1; i>=0; --i){
+		cout<<"  "; //indent;
 		for(int j=0; j<columnes; ++j){
-			if(j!=0) cout<<' ';  //Revisar on hi han els espais però funciona.
+			if(j!=0) cout<<' ';
 			cout<<stan[j+i*columnes];
 		}
 		cout<<endl;
 	}
-	cout<<n_prods<<endl;
+	cout<<"  "<<n_prods<<endl;
 	inv.inventario();
 	// Escriure QUANTITAT DE PRODS i el MAP.
 }
@@ -83,7 +135,8 @@ void sala::escribir() const
 
 string sala::consultar_pos(int fila ,int columna) const
 {
-	return stan[fila+columna];
+	fila=files-1-fila;
+	return stan[fila*columnes+columna];
 }
 
 bool sala::redimensionable(int fila, int columna) const
