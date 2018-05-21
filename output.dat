@@ -57,26 +57,32 @@ XW23 XW23 XW23
 XW23 12
 consultar_prod XW23
 12
-NOT IMPLEMENTED YET
+distribuir AS34 40
+error
 poner_prod AS34
-NOT IMPLEMENTED YET
+distribuir AS34 40
+29
+29
 escribir 1
-NULL
-0
+AS34
+1
+AS34 1
 escribir 2
-NULL NULL
-NULL NULL
-0
+AS34 AS34
+AS34 AS34
+4
+AS34 4
 escribir 3
 NULL NULL NULL
 NULL NULL NULL
 NULL NULL NULL
 0
 escribir 4
-NULL NULL
-NULL NULL
-NULL NULL
-0
+AS34 AS34
+AS34 AS34
+AS34 AS34
+6
+AS34 6
 escribir 5
 XW23 XW23 XW23
 XW23 XW23 XW23
@@ -111,4 +117,26 @@ XW23 XW23
 NULL NULL
 12
 XW23 12
-fin
+quitar_items 7 ASDF 10
+error
+quitar_items 7 XW23 10
+0
+escribir 7
+NULL NULL
+NULL NULL
+0
+quitar_items 7 AS34 1
+0
+escribir 7
+NULL NULL
+NULL NULL
+0
+poner_prod ZZZZ
+poner_items 7 ZZZZ 5
+1
+escribir 7
+ZZZZ ZZZZ
+ZZZZ ZZZZ
+4
+ZZZZ 4
+reoganizar 7

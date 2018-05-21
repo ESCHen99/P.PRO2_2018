@@ -71,7 +71,7 @@ public:
      \pre El prodcute 'p' existeix, la quantitat 'quantity' és no negativa i l'inventori 'inv' exiseix.
      \post Es col·loca sequancialement la quantitat de productes i es retorna el nombre de productes que no s'han pogut col·locar i s'actualitza l'inventari.
      */
-    int distribuir(string& p, int quantity, inventory& inv);
+    static int distribuir(string& p, int& quantity, inventory& inv, warehouse& w, const BinTree<int>& t);
     
     /** @brief Mètode que compacta una sala.
      \pre La sala 'sala' exiseix
@@ -119,8 +119,10 @@ public:
     sala/* * */ acces_sala(int sala);
     
     sala* acces_sala2(int sala){
-	return &alm[sala-1];
+	return &alm[sala];
 }
-    
+	BinTree<int>* acces_tree(){
+		return & (this->index);
+	}
 };
 #endif

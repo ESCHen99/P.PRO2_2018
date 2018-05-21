@@ -3,30 +3,36 @@ using namespace std;
 
 int sala::poner_items(string& product, int quantity){
 	int afegits=0;
-	for(int i=0; i<files*columnes and quantity>0; ++i){
+	int cont=quantity;
+	for(int i=0; i<files*columnes and cont>0; ++i){
 		if(stan[i]=="NULL"){
 			 stan[i]=product;
 			 ++afegits;
+			 --cont;
 		 }
 	}
 	map<string, int>* m=inv.acces_map();
 	(*m)[product]+=afegits;
 	n_prods+=afegits;
-	return quantity-afegits;
+	if(n_prods==0) (*m).erase(product);
+	return afegits;
 }
 
 int sala::quitar_items(string& product, int quantity){
 	int sustrets=0;
-	for(int i=int(stan.size())-1; i>=0 and quantity>0; --i){
+	int cont=quantity;
+	for(int i=int(stan.size())-1; i>=0 and cont>0; --i){
 			if(stan[i]==product){
 				stan[i]="NULL";
 				++sustrets;
+				--cont;
 			}
 	}
 	map<string, int>* m=inv.acces_map();
 	if((*m)[product]==sustrets) m->erase(product);
 	else (*m)[product]-=sustrets; 
 	n_prods-=sustrets;
+	if(n_prods==0) (*m).erase(product);
 	return sustrets;
 }
 
@@ -43,12 +49,12 @@ void sala::compactar(){
 void sala::reorganizar(){
 	map<string, int>* m=inv.acces_map();
 	map<string , int>::iterator it= m -> begin();
-	vector<string> s(files*columnes);
+	this->compactar();
+	int i=0;
 	while(it!= m -> end()){
-		for(int i=0; i< it -> second; ++i) s[i]=it -> first;
+		for(;i< it -> second; ++i) stan[i]=it -> first;
 		++it;
 	}
-	stan=s;
 }
 
 void sala::redimensionar(int files, int columnes){
@@ -87,7 +93,7 @@ bool sala::redimensionable(int fila, int columna) const
 
 bool sala::pos_valid(int fila, int columna) const
 {
-	return fila <= this -> files and columna <= this -> columnes;
+	return fila < this -> files and columna < this -> columnes;
 }
 
 

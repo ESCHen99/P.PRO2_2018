@@ -26,52 +26,80 @@ void warehouse::specify(int n){
 }
 
 int warehouse::poner_items(int sala, string& p, int quantity, inventory& inv){
-	int resta=alm[sala-1].poner_items(p, quantity);
-	inv.update_quantity(p, quantity-resta);
-	return resta;
+	int resta=alm[sala].poner_items(p, quantity);
+	inv.update_quantity(p, resta);
+	return quantity-resta;
 }
 
 int warehouse::quitar_items(int sala, string& p, int quantity, inventory& inv){
-	int resta=alm[sala-1].quitar_items(p, quantity);
-	inv.update_quantity(p, -(quantity-resta)); //S'ha de trure elements
-	return resta;
+	int resta=alm[sala].quitar_items(p, quantity);
+	inv.update_quantity(p, -resta); //S'ha de trure elements
+	return quantity-resta;
 }
 
-int warehouse::distribuir(string& p, int quantity, inventory& inv){
-	
+/*
+int warehouse::distribuir(string& p, int& quantity, inventory& inv, warehouse& w, const BinTree<int>& t){
+	if(t.empty() or quantity==0) return quantity;
+	else{
+		quantity=w.poner_items(t.value()-1, p, quantity, inv);
+		BinTree<int> esq=t.left();
+		BinTree<int> dre=t.right();
+		if(quantity%2==0){
+			int a, b;
+			a=b=quantity/2;
+			return distribuir(p, a, inv, w, esq)+distribuir(p, b, inv, w, dre);
+		}
+		else{
+			return distribuir(p, quantity, inv, w, esq);
+		}
+	}
+}
+*/
+
+int warehouse::distribuir(string& p, int& quantity, inventory& inv, warehouse& w, const BinTree<int>& t){
+	if(t.empty() or quantity==0) return quantity;
+	else{
+		quantity=w.poner_items(t.value()-1, p, quantity, inv);
+		BinTree<int> esq=t.left();
+		BinTree<int> dre=t.right();
+			int a, b;
+			b=quantity/2;
+			a=quantity-b;
+			return distribuir(p, a, inv, w, esq)+distribuir(p, b, inv, w, dre);
+	}
 }
 
 void warehouse::compactar(int sala){
-	alm[sala-1].compactar();
+	alm[sala].compactar();
 }
 
 void warehouse::redimensionar(int sala, int files, int columnes){
-	alm[sala-1].redimensionar(files, columnes);
+	alm[sala].redimensionar(files, columnes);
 }
 
 void warehouse::reorganizar(int sala){
-	
+	alm[sala].reorganizar();
 }
 //Consultores
 
 void warehouse::escribir(int sala) const
 {
-	alm[sala-1].escribir();
+	alm[sala].escribir();
 }
 
 string warehouse::consultar_pos(int sala, int fila, int columna) const
 {
-	return alm[sala-1].consultar_pos(fila, columna);
+	return alm[sala].consultar_pos(fila, columna);
 }
 
 bool warehouse::exists(int sala) const
 {
-	return 0<sala-1<alm_size;
+	return 0<=sala and sala<alm_size;
 }
 
 sala /* * */ warehouse::acces_sala(int sala)
 {
-	return alm[sala-1];
+	return alm[sala];
 }
 
 
