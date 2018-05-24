@@ -26,15 +26,15 @@ void warehouse::specify(int n){
 }
 
 int warehouse::poner_items(int sala, string& p, int quantity, inventory& inv){
-	int resta=alm[sala].poner_items(p, quantity);
-	inv.update_quantity(p, resta);
-	return quantity-resta;
+	int afegits=alm[sala].poner_items(p, quantity);
+	inv.update_quantity(p, afegits);
+	return quantity-afegits;
 }
 
 int warehouse::quitar_items(int sala, string& p, int quantity, inventory& inv){
-	int resta=alm[sala].quitar_items(p, quantity);
-	inv.update_quantity(p, -resta); //S'ha de trure elements
-	return quantity-resta;
+	int sustrets=alm[sala].quitar_items(p, quantity);
+	inv.update_quantity(p, -sustrets); //S'ha de trure elements
+	return quantity-sustrets;
 }
 
 /*

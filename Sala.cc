@@ -96,7 +96,7 @@ void sala::reorganizar(){ //Modificar
 	map<string, int>* m=inv.acces_map();
 	map<string , int>::iterator it= m -> begin();
 	//this->compactar();
-	vector<string> s(files*columnes);
+	vector<string> s(files*columnes, "NULL");
 	int i=0;
 	while(it!= m -> end()){
 		for(int j=0; j<it->second; ++j){
@@ -119,6 +119,7 @@ void sala::redimensionar(int files, int columnes){
 
 void sala::escribir() const
 {
+	if(files*columnes>0){
 	for(int i=files-1; i>=0; --i){
 		cout<<"  "; //indent;
 		for(int j=0; j<columnes; ++j){
@@ -127,6 +128,7 @@ void sala::escribir() const
 		}
 		cout<<endl;
 	}
+}
 	cout<<"  "<<n_prods<<endl;
 	inv.inventario();
 	// Escriure QUANTITAT DE PRODS i el MAP.
@@ -141,12 +143,12 @@ string sala::consultar_pos(int fila ,int columna) const
 
 bool sala::redimensionable(int fila, int columna) const
 {
-	return n_prods<=fila*columna;
+	return 0<=n_prods and n_prods<=fila*columna;
 }
 
 bool sala::pos_valid(int fila, int columna) const
 {
-	return fila < this -> files and columna < this -> columnes;
+	return 0<=fila and fila < this -> files and 0<=columna and columna < this -> columnes;
 }
 
 

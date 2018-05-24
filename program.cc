@@ -14,8 +14,8 @@ void poner_prod(inventory& inv){
 void quitar_prod(inventory& inv){
 	string product;
 	cin>>product;
-	cout<<"quitar_prod "<<product<<endl;
-	if(inv.exists(product)) inv.quitar_prod(product);
+	cout<<"quitar_prod "<<product<<endl; //producto tiene que ser cero cantidad
+	if(inv.exists(product) and inv.consultar_prod(product)==0) inv.quitar_prod(product);
 	else cout<<"  error"<<endl;
 }
 
@@ -26,7 +26,7 @@ void poner_items(warehouse& a, inventory& i){
 	cin>>sala>>product>>quantity;
 	cout<<"poner_items "<<sala<<' '<<product<<' '<<quantity<<endl;	
 	--sala;
-	if(i.exists(product)) cout<<"  "<<a.poner_items(sala, product, quantity, i)<<endl;
+	if(i.exists(product) and a.exists(sala)) cout<<"  "<<a.poner_items(sala, product, quantity, i)<<endl;
 	else cout<<"  error"<<endl;
 }
 
@@ -37,7 +37,7 @@ void quitar_items(warehouse& a, inventory& i){
 	cin>>sala>>product>>quantity;
 	cout<<"quitar_items "<<sala<<' '<<product<<' '<<quantity<<endl;	
 	--sala;
-	if(i.exists(product)) cout<<"  "<<a.quitar_items(sala, product, quantity, i)<<endl;
+	if(i.exists(product) and a.exists(sala)) cout<<"  "<<a.quitar_items(sala, product, quantity, i)<<endl;
 	else cout<<"  error"<<endl;
 }
 
@@ -90,7 +90,8 @@ void escribir(const warehouse& a){
 	cin>>sala;
 	cout<<"escribir "<<sala<<endl;
 	--sala;
-	a.escribir(sala);
+	if(a.exists(sala)) a.escribir(sala);
+	else cout<<"error"<<endl;
 }
 
 void consultar_pos(warehouse& a){
@@ -99,7 +100,7 @@ void consultar_pos(warehouse& a){
 	cout<<"consultar_pos "<<sala<<' '<<fila<<' '<<columna<<endl;
 	--sala;
 	--fila; --columna;
-	if((*a.acces_sala2(sala)).pos_valid(fila, columna)) cout<<"  "<<a.consultar_pos(sala, fila, columna)<<endl;
+	if(a.exists(sala) and (*a.acces_sala2(sala)).pos_valid(fila, columna)) cout<<"  "<<a.consultar_pos(sala, fila, columna)<<endl;
 	else cout<<"  error"<<endl;
 }
 
