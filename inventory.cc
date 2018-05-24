@@ -13,6 +13,13 @@ void inventory::update_quantity(string& product, int quantity){
 	products[product]+=quantity;
 }
 
+
+void inventory::inv_sala_update(string& product, int quantity){
+	products[product]+=quantity;
+	if(products[product]==0) products.erase(product);
+}
+
+
 bool inventory::exists(string& product) const
 {
 	return products.find(product) != products.end();
@@ -33,6 +40,8 @@ void inventory::inventario() const
 	}
 }
 
+/*
 map<string, int>* inventory::acces_map(){
 	return &products;
 }
+*/

@@ -27,6 +27,10 @@ private:
     BinTree<int> index;
     vector<sala> alm;
     int alm_size;
+
+ static int i_distribuir(string& p, int& quantity, inventory& inv, warehouse& w, const BinTree<int>& t);
+
+
 public:
     //Constructores
       /** @brief Constructora per defecte.
@@ -71,7 +75,7 @@ public:
      \pre El prodcute 'p' existeix, la quantitat 'quantity' és no negativa i l'inventori 'inv' exiseix.
      \post Es col·loca sequancialement la quantitat de productes i es retorna el nombre de productes que no s'han pogut col·locar i s'actualitza l'inventari.
      */
-    static int distribuir(string& p, int& quantity, inventory& inv, warehouse& w, const BinTree<int>& t);
+    static int distribuir(string& p, int& quantity, inventory& inv, warehouse& w);
     
     /** @brief Mètode que compacta una sala.
      \pre La sala 'sala' exiseix
@@ -112,17 +116,21 @@ public:
      */
     bool exists(int sala) const;
     
-    /** @brief Accedir una sala.
-     \pre La sala 'sala' existeix.
-     \post Retorna per la sala per referència.
-     */
-    sala/* * */ acces_sala(int sala);
-    
+    /*     
+         
     sala* acces_sala2(int sala){
 	return &alm[sala];
 }
+
+*/
+/*
 	BinTree<int>* acces_tree(){
 		return & (this->index);
 	}
+*/
+	bool sala_redimensionable(int sala, int files, int columnes) const;
+	
+	
+	bool pos_valid(int sala, int fila, int columna) const;
 };
 #endif

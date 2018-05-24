@@ -47,7 +47,7 @@ void distribuir(warehouse& w, inventory& i){
 	cin>>product>>quantity;
 	cout<<"distribuir "<<product<<' '<<quantity<<endl;
 	if(i.exists(product)){
-		cout<<"  "<<warehouse::distribuir(product, quantity, i, w, *(w.acces_tree()))<<endl;
+		cout<<"  "<<warehouse::distribuir(product, quantity, i, w)<<endl;
 		//cout<<quantity<<endl;
 	}
 	else cout<<"  error"<<endl;
@@ -76,7 +76,7 @@ void redimensionar(warehouse& a){
 	cin>>sala>>files>>columnes;
 	cout<<"redimensionar "<<sala<<' '<<files<<' '<<columnes<<endl;
 	--sala;
-	if(a.exists(sala) and (*a.acces_sala2(sala)).redimensionable(files, columnes)) a.redimensionar(sala, files, columnes);
+	if(a.exists(sala) and a.sala_redimensionable(sala, files, columnes)) a.redimensionar(sala, files, columnes);
 	else cout<<"  error"<<endl;
 }
 
@@ -100,7 +100,7 @@ void consultar_pos(warehouse& a){
 	cout<<"consultar_pos "<<sala<<' '<<fila<<' '<<columna<<endl;
 	--sala;
 	--fila; --columna;
-	if(a.exists(sala) and (*a.acces_sala2(sala)).pos_valid(fila, columna)) cout<<"  "<<a.consultar_pos(sala, fila, columna)<<endl;
+	if(a.exists(sala) and a.pos_valid(sala, fila, columna)) cout<<"  "<<a.consultar_pos(sala, fila, columna)<<endl;
 	else cout<<"  error"<<endl;
 }
 

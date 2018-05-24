@@ -37,26 +37,7 @@ int warehouse::quitar_items(int sala, string& p, int quantity, inventory& inv){
 	return quantity-sustrets;
 }
 
-/*
-int warehouse::distribuir(string& p, int& quantity, inventory& inv, warehouse& w, const BinTree<int>& t){
-	if(t.empty() or quantity==0) return quantity;
-	else{
-		quantity=w.poner_items(t.value()-1, p, quantity, inv);
-		BinTree<int> esq=t.left();
-		BinTree<int> dre=t.right();
-		if(quantity%2==0){
-			int a, b;
-			a=b=quantity/2;
-			return distribuir(p, a, inv, w, esq)+distribuir(p, b, inv, w, dre);
-		}
-		else{
-			return distribuir(p, quantity, inv, w, esq);
-		}
-	}
-}
-*/
-
-int warehouse::distribuir(string& p, int& quantity, inventory& inv, warehouse& w, const BinTree<int>& t){
+int warehouse::i_distribuir(string& p, int& quantity, inventory& inv, warehouse& w, const BinTree<int>& t){
 	if(t.empty() or quantity==0) return quantity;
 	else{
 		quantity=w.poner_items(t.value()-1, p, quantity, inv);
@@ -65,8 +46,12 @@ int warehouse::distribuir(string& p, int& quantity, inventory& inv, warehouse& w
 			int a, b;
 			b=quantity/2;
 			a=quantity-b;
-			return distribuir(p, a, inv, w, esq)+distribuir(p, b, inv, w, dre);
+			return i_distribuir(p, a, inv, w, esq)+i_distribuir(p, b, inv, w, dre);
 	}
+}
+
+int warehouse::distribuir(string& p, int& quantity, inventory& inv, warehouse& w){
+	return i_distribuir(p, quantity, inv, w, w.index);
 }
 
 void warehouse::compactar(int sala){
@@ -97,13 +82,15 @@ bool warehouse::exists(int sala) const
 	return 0<=sala and sala<alm_size;
 }
 
-sala /* * */ warehouse::acces_sala(int sala)
+bool warehouse::sala_redimensionable(int sala, int files, int columnes) const
 {
-	return alm[sala];
+	return alm[sala].redimensionable(files, columnes);
 }
 
-
-
+bool warehouse::pos_valid(int sala, int fila, int columna) const
+{
+	return alm[sala].pos_valid(fila, columna);
+}
 
 
 //-D_JUDGE_ -D_GLIBCXX_DEBUG -O2 -Wall -Wextra -Werror -Wno-sign-compare 

@@ -13,35 +13,21 @@ int sala::poner_items(string& product, int quantity){ //modificar
 		 }
 	}
 
+	if(afegits!=0){
+	inv.inv_sala_update(product, afegits);
+	n_prods+=afegits;
+	}
+/*
 	map<string, int>* m=inv.acces_map();
 	if(afegits!=0){
 	(*m)[product]+=afegits;
 	n_prods+=afegits;
 	}
 	return afegits;
-}
-
-/*
-int sala::poner_items(string& product, int quantity){
-	int afegits=0;
-	int cont=quantity;
-	
-	for(int i=files-1; i>=0 and cont>0; --i){
-		for(int j=0; j<columnes; ++j){
-			if(stan[i*columnes+j]=="NULL"){
-			 stan[i*columnes+j]=product;
-			 ++afegits;
-			 --cont;
-		 }
-		}
-	}
-	map<string, int>* m=inv.acces_map();
-	(*m)[product]+=afegits;
-	n_prods+=afegits;
-	if(n_prods==0) (*m).erase(product);
+*/
 	return afegits;
 }
-*/
+
 
 int sala::quitar_items(string& product, int quantity){ //modificar
 	int sustrets=0;
@@ -53,36 +39,23 @@ int sala::quitar_items(string& product, int quantity){ //modificar
 				--cont;
 			}
 	}
+	
+	inv.inv_sala_update(product, -sustrets);
+	n_prods-=sustrets;
+	
+	/*
 	map<string, int>* m=inv.acces_map();
 	if((*m)[product]==sustrets) m->erase(product);
 	else (*m)[product]-=sustrets; 
 	n_prods-=sustrets;
 	return sustrets;
-}
-
-/*
-int sala::quitar_items(string& product, int quantity){ //modificar
-	int sustrets=0;
-	int cont=quantity;
-		for(int i=files-1; i>=0 and cont>0; --i){
-		for(int j=0; j<columnes; ++j){
-			if(stan[i*columnes+j]==product){
-				stan[i*columnes+j]="NULL";
-				++sustrets;
-				--cont;
-			}
-		}
-	}
-	map<string, int>* m=inv.acces_map();
-	if((*m)[product]==sustrets) m->erase(product);
-	else (*m)[product]-=sustrets; 
-	n_prods-=sustrets;
-	if(n_prods==0) (*m).erase(product);
+	*/
+	
 	return sustrets;
 }
-*/
 
-void sala::compactar(){ //Modificar
+
+void sala::compactar(){
 	int i_1=0, i_2=0;
 	while(i_1<int(stan.size()) and int(i_2<stan.size())){
 		//cout<<i_1<<' '<<i_2<<' '<<stan[i_1]<<' '<<stan[i_2]<<endl;
@@ -92,13 +65,16 @@ void sala::compactar(){ //Modificar
 	}
 }
 
-void sala::reorganizar(){ //Modificar
-	map<string, int>* m=inv.acces_map();
-	map<string , int>::iterator it= m -> begin();
-	//this->compactar();
+void sala::reorganizar(){
+	//map<string, int>* m=inv.acces_map();
+	
+	
+	map<string , int>::iterator it= inv.products.begin(); //Amb una firend class
+	
+	
 	vector<string> s(files*columnes, "NULL");
 	int i=0;
-	while(it!= m -> end()){
+	while(it!= inv.products.end()){
 		for(int j=0; j<it->second; ++j){
 			s[i]=it -> first;
 			++i;

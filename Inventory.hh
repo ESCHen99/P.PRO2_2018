@@ -19,6 +19,7 @@ using namespace std;
 class inventory{
 private:
     map<string, int> products;
+    friend class sala;
 public:
     //Constructoras
     
@@ -49,6 +50,8 @@ public:
      */
     void update_quantity(string& product, int quantity);
     
+    
+    void inv_sala_update(string& product, int quantity);
     //Consultoras
     
     /** @brief Determinar si el producte 'product' està a l'inventari.
@@ -68,8 +71,9 @@ public:
      \post S'imprimeix per ordre alfabètic els productes amb la quantitat que hi ha al magatzem.
      */
     void inventario() const;
-	
+	/*
 	map<string, int>* acces_map();
+	*/
 };
 
 #endif

@@ -1,0 +1,41 @@
+poner_prod Temps logarítmic respecte la quantitat d'identificadors de productes de l'inventari.
+
+quitar_prod Temps logarítimic respecte la quantitat d'identificadors de productes de l'inventari.
+
+update_quantity Temps logarítmic respecte la quantitat d'identificadors de productes de l'inventari.
+
+inv_sala_update Temps logarítimic respecta la quantitat de productes (amb diferents indentificadors) de la sala.
+
+exists Temps logarítmic respecte la quantitat d'identificadors de productes de l'inventari.
+
+consultar_prod Temps logarítmic respecte la quantitat d'identificadors de productes de l'inventari.
+
+inventari Cost linial respecte la quantitat de d'identificadors de productes de l'inventari.
+
+SALA.hh
+
+poner_items Complexitat Linial respecte la quantitat de productes a posar.
+
+quitar_items Complexitat linial respecte la quantitat de productes a treure.
+
+compactar Complexitat linial respecte la quantitat de productes totals de la sala.
+
+reorganitzar Complexitat linial (O(2n)) respecte la el tamany de l'estanteria (Tot i que no hagi productes la còpia de vectors és linial respecte la seva longitut).
+
+redimensionar Complexitat linial de l'operació resize de la sdl vector.
+
+escribir Complexitat linial respecte la quantitat de productes totals de la sala i d'indentificadors de productes.
+
+redimensionable Complexitat constant ja que són dues comparacions.
+
+pos_valid Complexitat constant.
+
+
+WAREHOUSE
+
+poner_items quitar_items compactar reorganitzar redimensionar sala_redimensionable pos_valid iguals que per la sala.
+
+distribuir Falta pensar
+
+
+

@@ -29,10 +29,6 @@ private:
     int files, columnes;
 	bool compactada;
 	inventory inv;
-	/*
-static string null="NULL"; 
-static string* N=&null;
-*/
 public:
     //Constructores
     
@@ -48,7 +44,7 @@ public:
 		columnes=b;
 		compactada=true;
 		stan.resize(a*b, "NULL");
-	} //La memòria dinàmica en sortir no es destrueix però si el punter.
+	}
     //Modificadores
     
     /** @brief Posar una quantitat 'quantity' de productes.
@@ -110,12 +106,7 @@ public:
      */
     bool pos_valid(int fila, int columna) const;
     
-    
-    void fila_columna() const
-     {
-		 cout<<files<<endl;
-		 cout<<columnes<<endl;
-		 }
+
     
 };
 #endif
