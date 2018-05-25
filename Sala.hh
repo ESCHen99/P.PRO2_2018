@@ -28,6 +28,7 @@ private:
     vector<string> stan;
     int files, columnes;
 	bool compactada;
+	bool full;
 	inventory inv;
 public:
     //Constructores
@@ -43,6 +44,7 @@ public:
 		files=a;
 		columnes=b;
 		compactada=true;
+		if(a*b!=0) full=false;
 		stan.resize(a*b, "NULL");
 	}
     //Modificadores
@@ -104,7 +106,7 @@ public:
      \pre <em>true</em>
      \post Retorna <em>true</em> si la posició és vàlida. En cas contrari retornarà <em>false</em>
      */
-    bool pos_valid(int fila, int columna) const;
+    bool pos_valida(int fila, int columna) const;
     
 
     

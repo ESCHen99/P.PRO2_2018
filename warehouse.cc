@@ -1,6 +1,6 @@
 #include "Warehouse.hh"
 
-void BinTreeIO(BinTree<int>& T){
+void warehouse::BinTreeIO(BinTree<int>& T){
 	int a;
 	cin>>a;
 	if(a!=0){
@@ -13,7 +13,6 @@ void BinTreeIO(BinTree<int>& T){
 }
 
 void warehouse::specify(int n){
-	//Entrada de la distribució del magatzem en PREORDRE.
 	this -> alm_size=n;
 	BinTreeIO(index);
 	alm.resize(alm_size);
@@ -33,7 +32,7 @@ int warehouse::poner_items(int sala, string& p, int quantity, inventory& inv){
 
 int warehouse::quitar_items(int sala, string& p, int quantity, inventory& inv){
 	int sustrets=alm[sala].quitar_items(p, quantity);
-	inv.update_quantity(p, -sustrets); //S'ha de trure elements
+	inv.update_quantity(p, -sustrets);
 	return quantity-sustrets;
 }
 
@@ -89,7 +88,7 @@ bool warehouse::sala_redimensionable(int sala, int files, int columnes) const
 
 bool warehouse::pos_valid(int sala, int fila, int columna) const
 {
-	return alm[sala].pos_valid(fila, columna);
+	return alm[sala].pos_valida(fila, columna);
 }
 
 

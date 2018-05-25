@@ -28,8 +28,8 @@ private:
     vector<sala> alm;
     int alm_size;
 
- static int i_distribuir(string& p, int& quantity, inventory& inv, warehouse& w, const BinTree<int>& t);
-
+	static int i_distribuir(string& p, int& quantity, inventory& inv, warehouse& w, const BinTree<int>& t);
+	static void BinTreeIO(BinTree<int>& T);
 
 public:
     //Constructores
@@ -116,18 +116,7 @@ public:
      */
     bool exists(int sala) const;
     
-    /*     
-         
-    sala* acces_sala2(int sala){
-	return &alm[sala];
-}
 
-*/
-/*
-	BinTree<int>* acces_tree(){
-		return & (this->index);
-	}
-*/
 	bool sala_redimensionable(int sala, int files, int columnes) const;
 	
 	

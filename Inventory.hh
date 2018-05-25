@@ -7,9 +7,11 @@
 #ifndef NO_DIAGRAM
 #include <map>
 #include <iostream>
+#include <vector>
 using namespace std;
 #endif
-
+typedef map<string, int>::const_iterator const_it;
+typedef map<string, int>::iterator it;
 /**
  @class inventory
  @brief Aquesta classe representa l'inventari del magatzem.
@@ -19,7 +21,7 @@ using namespace std;
 class inventory{
 private:
     map<string, int> products;
-    friend class sala;
+    const_it iterador=products.begin();
 public:
     //Constructoras
     
@@ -71,9 +73,16 @@ public:
      \post S'imprimeix per ordre alfabètic els productes amb la quantitat que hi ha al magatzem.
      */
     void inventario() const;
-	/*
-	map<string, int>* acces_map();
-	*/
+	
+	const_it const_it_begin() const;
+
+	void next_const_it(const_it& iterador_const);
+	
+	//void reset_const_it();
+	
+	const_it const_it_end() const;
+	
+    //vector<string> llista(int files, int columnes) const;
 };
 
 #endif

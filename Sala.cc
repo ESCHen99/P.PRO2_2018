@@ -1,56 +1,38 @@
 #include "Sala.hh"
+#include <map>
 using namespace std;
 
+typedef map<string, int>::const_iterator const_it;
+typedef map<string, int>::iterator it;
 
-int sala::poner_items(string& product, int quantity){ //modificar
-	int afegits=0;
+int sala::poner_items(string& product, int quantity){
 	int cont=quantity;
-	for(int i=0; i<files*columnes and cont>0; ++i){
+	for(int i=0; cont>0 and i<files*columnes; ++i){
 		if(stan[i]=="NULL"){
 			 stan[i]=product;
-			 ++afegits;
 			 --cont;
 		 }
 	}
-
+	int afegits=quantity-cont;
 	if(afegits!=0){
 	inv.inv_sala_update(product, afegits);
 	n_prods+=afegits;
 	}
-/*
-	map<string, int>* m=inv.acces_map();
-	if(afegits!=0){
-	(*m)[product]+=afegits;
-	n_prods+=afegits;
-	}
-	return afegits;
-*/
 	return afegits;
 }
 
 
-int sala::quitar_items(string& product, int quantity){ //modificar
-	int sustrets=0;
+int sala::quitar_items(string& product, int quantity){
 	int cont=quantity;
-	for(int i=0; i<files*columnes and cont>0; ++i){ //segur que és <files*columnes?
-			if(stan[i]==product){
+	for(int i=0; cont>0 and i<files*columnes; ++i){
+		if(stan[i]==product){
 				stan[i]="NULL";
-				++sustrets;
 				--cont;
-			}
+		}
 	}
-	
+	int sustrets=quantity-cont;
 	inv.inv_sala_update(product, -sustrets);
 	n_prods-=sustrets;
-	
-	/*
-	map<string, int>* m=inv.acces_map();
-	if((*m)[product]==sustrets) m->erase(product);
-	else (*m)[product]-=sustrets; 
-	n_prods-=sustrets;
-	return sustrets;
-	*/
-	
 	return sustrets;
 }
 
@@ -58,30 +40,30 @@ int sala::quitar_items(string& product, int quantity){ //modificar
 void sala::compactar(){
 	int i_1=0, i_2=0;
 	while(i_1<int(stan.size()) and int(i_2<stan.size())){
-		//cout<<i_1<<' '<<i_2<<' '<<stan[i_1]<<' '<<stan[i_2]<<endl;
 		if(stan[i_1]!="NULL") ++i_1;
 		if(stan[i_2]=="NULL" or i_2<=i_1) ++i_2;
 		if(i_2<int(stan.size()) and stan[i_2]!="NULL" and stan[i_1]=="NULL") swap(stan[i_2], stan[i_1]);
 	}
 }
 
+/*
 void sala::reorganizar(){
-	//map<string, int>* m=inv.acces_map();
-	
-	
-	map<string , int>::iterator it= inv.products.begin(); //Amb una firend class
-	
-	
+	inv.llista(files, columnes).swap(stan);
+}
+*/
+
+void sala::reorganizar(){
+	const_it iterator=inv.const_it_begin();
 	vector<string> s(files*columnes, "NULL");
 	int i=0;
-	while(it!= inv.products.end()){
-		for(int j=0; j<it->second; ++j){
-			s[i]=it -> first;
+	while(iterator!=inv.const_it_end()){
+		for(int j=0; j<iterator->second; ++j){
+			s[i]=iterator->first;
 			++i;
 		}
-		++it;
+		inv.next_const_it(iterator);
 	}
-	stan=s;
+	s.swap(stan);
 }
 
 void sala::redimensionar(int files, int columnes){
@@ -97,7 +79,7 @@ void sala::escribir() const
 {
 	if(files*columnes>0){
 	for(int i=files-1; i>=0; --i){
-		cout<<"  "; //indent;
+		cout<<"  ";
 		for(int j=0; j<columnes; ++j){
 			if(j!=0) cout<<' ';
 			cout<<stan[j+i*columnes];
@@ -107,7 +89,6 @@ void sala::escribir() const
 }
 	cout<<"  "<<n_prods<<endl;
 	inv.inventario();
-	// Escriure QUANTITAT DE PRODS i el MAP.
 }
 
 
@@ -122,7 +103,7 @@ bool sala::redimensionable(int fila, int columna) const
 	return 0<=n_prods and n_prods<=fila*columna;
 }
 
-bool sala::pos_valid(int fila, int columna) const
+bool sala::pos_valida(int fila, int columna) const
 {
 	return 0<=fila and fila < this -> files and 0<=columna and columna < this -> columnes;
 }
