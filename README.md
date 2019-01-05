@@ -1,1 +1,1 @@
-# P.PRO2_2018
+# Pràctica PRO2 Curs 17-18 Q2
